@@ -16,16 +16,18 @@ class InvoiceTest extends TestCase
         $chargingDetailRecord = new ChargingDetailRecord();
         $chargingDetailRecord->meterStart = intval($this->faker->numerify('#######'));
         $chargingDetailRecord->meterStop = $chargingDetailRecord->meterStart + intval($this->faker->numerify('#####'));
-        $chargingDetailRecord->timestampStart = new \DateTime($this->faker->iso8601());
-        $chargingDetailRecord->timestampStop = $chargingDetailRecord->timestampStart->add(new \DateInterval('PT' . rand(60,135) . 'M'));
+        $fakeDate = $this->faker->iso8601();
+        $chargingDetailRecord->timestampStart = new \DateTime($fakeDate);
+        $chargingDetailRecord->timestampStop =  new \DateTime($fakeDate);
+        $chargingDetailRecord->timestampStop->add(new \DateInterval('PT'.rand(60,120).'M'));
         return $chargingDetailRecord;
     }
 
     private function createChargingRate(): ChargingRate{
         $chargingRate = new ChargingRate();
-        $chargingRate->rate = rand(0.2,0.9);
-        $chargingRate->time = rand(2,4);
-        $chargingRate->transaction = rand(1,1.5);
+        $chargingRate->rate = mt_rand(20,90)/100;
+        $chargingRate->time = mt_rand(200,400)/100;
+        $chargingRate->transaction = mt_rand(100,150)/100;
         return $chargingRate;
     }
     /**
@@ -43,6 +45,7 @@ class InvoiceTest extends TestCase
         $invoice->chargingRate = $chargingRate;
 
         $invoice->calculate();
+
         $this->assertIsFloat($invoice->overall);
         $this->assertIsFloat($invoice->energy);
         $this->assertIsFloat($invoice->time);
@@ -62,7 +65,7 @@ class InvoiceTest extends TestCase
         $invoice->chargingDetailRecord = $chargingDetailRecord;
         $invoice->chargingRate = $chargingRate;
         $invoice->calculate();
-        $this->assertEquals($invoice->overall,($invoice->eneregy+$invoice->time+$invoice->transaction));
+        $this->assertEquals($invoice->overall,($invoice->energy + $invoice->time + $invoice->transaction));
     }
 
     /**
@@ -173,7 +176,7 @@ class InvoiceTest extends TestCase
     {
         $chargingDetailRecord = $this->createChargingDetailRecord();
         $chargingRate = $this->createChargingRate();
-        $time = new \DateTime($chargingDetailRecord->timestampStop);
+        $time = clone $chargingDetailRecord->timestampStop;
         $chargingDetailRecord->timestampStart = $time->add(new \DateInterval('PT' . rand(60,135) . 'M'));
 
         $invoice = new Invoice();
