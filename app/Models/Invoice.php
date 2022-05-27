@@ -30,9 +30,25 @@ class Invoice
     }
     private function calculatePrice()
     {
-        $this->energy = $this->chargingDetailRecord->getValue() * $this->chargingRate->rate;
-        $this->time =$this->chargingDetailRecord->getDuration() * $this->chargingRate->time;
-        $this->transaction = $this->chargingRate->transaction;
-        $this->overall = $this->energy + $this->time + $this->transaction;
+        $this->energy = number_format(
+            round(
+                $this->chargingDetailRecord->getValueInkWh() * $this->chargingRate->energy,3
+            ),
+            3,'.','');
+        $this->time =number_format(
+            round(
+                $this->chargingDetailRecord->getDurationInHour() * $this->chargingRate->time,3
+            ),
+            3,'.','');
+        $this->transaction = number_format(
+            round(
+                $this->chargingRate->transaction,3
+            ),
+            3,'.','');
+        $this->overall = number_format(
+            round(
+                $this->energy + $this->time + $this->transaction,2
+            ),
+            2,'.','');
     }
 }

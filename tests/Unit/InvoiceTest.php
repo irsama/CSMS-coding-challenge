@@ -25,7 +25,7 @@ class InvoiceTest extends TestCase
 
     private function createChargingRate(): ChargingRate{
         $chargingRate = new ChargingRate();
-        $chargingRate->rate = mt_rand(20,90)/100;
+        $chargingRate->energy = mt_rand(20,90)/100;
         $chargingRate->time = mt_rand(200,400)/100;
         $chargingRate->transaction = mt_rand(100,150)/100;
         return $chargingRate;
@@ -65,7 +65,10 @@ class InvoiceTest extends TestCase
         $invoice->chargingDetailRecord = $chargingDetailRecord;
         $invoice->chargingRate = $chargingRate;
         $invoice->calculate();
-        $this->assertEquals($invoice->overall,($invoice->energy + $invoice->time + $invoice->transaction));
+        $this->assertEquals($invoice->overall,number_format(
+            round(($invoice->energy + $invoice->time + $invoice->transaction),2),
+                2,'.','')
+        );
     }
 
     /**

@@ -62,3 +62,41 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+##A brief instruction for running CSMS-coding-challenge:
+
+To run this project, you should install PHP 7.4 or later and Composer on your computer, you can download XAMPP from this <a href='https://www.apachefriends.org/download.html' target='blank'>link</a> 
+and Composer from this <a href='https://getcomposer.org/Composer-Setup.exe' target='blank'>link</a> 
+if your OS is Windows, but if you use of Linux  you have to install PHP and Composer via command you can find its manual <a href='https://www.php.net/manual/en/install.unix.php' target='blank'>here</a> 
+for PHP and <a href='https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos' target='blank'>here</a> for Composer.
+Now you should install Laravel via this command:
+
+    composer global require laravel/installer
+
+After install above tools, you should clone the project from this git hub address, via a command like this:
+
+    git clone https://github.com/irsama/CSMS-coding-challenge.git project-directory
+
+After that you should cd into project directory, and then you should install packages via this command:
+
+    composer install
+
+Its optional in this project but you can prepare .env (Laravel config file)  by create a copy from .env.example to .env and then generate an app encryption key by this command:
+
+    php artisan key:generate
+
+Now project is ready to run via this command:
+
+    php artisan serve
+
+You can access to the API by this address (you can use API platform such as Postman):
+
+    localhost:8000/api/rate
+
+You can run tests by:
+
+    php artisan test
+
+And if you wanna to run a specific test you should filter above command like this:
+
+    php artisan test –filter=function_name
