@@ -7,8 +7,8 @@ use App\Http\Requests\Invoice\InvoiceCalculateRequest;
 interface IInvoiceService
 {
     /**
-     * @param InvoiceCalculateRequest $request
+     * @param array $data
      * @return array|null
      */
-    public function calculate(InvoiceCalculateRequest $request): ?array;
+    public function calculate(array $data): ?array;
 }

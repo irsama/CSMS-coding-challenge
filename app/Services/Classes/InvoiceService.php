@@ -12,15 +12,15 @@ class InvoiceService implements IInvoiceService
 {
 
     /**
-     * @param InvoiceCalculateRequest $request
+     * @param array $data
      * @return array|null
      */
-    public function calculate(InvoiceCalculateRequest $request): ?array
+    public function calculate(array $data): ?array
     {
         $invoice = new Invoice();
-        if (!$request->validator->fails()) {
-            $rateData = $request->get('rate');
-            $cdrData = $request->get('cdr');
+        if(count($data) !== 0) {
+            $rateData = $data['rate'];
+            $cdrData = $data['cdr'];
             $chargingDetailRecord = new ChargingDetailRecord($cdrData);
             $chargingRate = new ChargingRate($rateData);
 

@@ -14,7 +14,11 @@ class InvoiceController extends Controller
      */
     public function rate(InvoiceCalculateRequest $request): JsonResponse
     {
+        $data = [];
+        if(!$request->validator->fails()){
+            $data = $request->all();
+        }
         $invoiceService = new InvoiceService();
-        return response()->json($invoiceService->calculate($request));
+        return response()->json($invoiceService->calculate($data));
     }
 }
