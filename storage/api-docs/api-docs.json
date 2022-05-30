@@ -1,0 +1,94 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Invoice",
+        "version": "0.1"
+    },
+    "paths": {
+        "/rate": {
+            "post": {
+                "tags": [
+                    "rate"
+                ],
+                "summary": "Calculate given rate to the corresponding CDR",
+                "description": "Add a new pet to the store.",
+                "operationId": "addRate",
+                "requestBody": {
+                    "description": "rate and CDR for calculating parice",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "cdr": {
+                                        "properties": {
+                                            "meterStart": {
+                                                "type": "number"
+                                            },
+                                            "timestampStart": {
+                                                "type": "string timestamp according to ISO 8601"
+                                            },
+                                            "meterStop": {
+                                                "type": "number"
+                                            },
+                                            "timestamp": {
+                                                "type": "string timestamp according to ISO 8601"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "rate": {
+                                        "properties": {
+                                            "energy": {
+                                                "type": "number"
+                                            },
+                                            "time": {
+                                                "type": "number"
+                                            },
+                                            "transaction": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "overall": {
+                                            "type": "number"
+                                        },
+                                        "rate": {
+                                            "properties": {
+                                                "energy": {
+                                                    "type": "number"
+                                                },
+                                                "time": {
+                                                    "type": "number"
+                                                },
+                                                "transaction": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

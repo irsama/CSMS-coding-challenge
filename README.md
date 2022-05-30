@@ -100,3 +100,7 @@ You can run tests by:
 And if you wanna to run a specific test you should filter above command like this:
 
     php artisan test –filter=function_name
+
+Finally, you can see documentations for API by below link 
+
+    http://localhost:8000/api/documentation
